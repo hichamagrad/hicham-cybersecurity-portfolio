@@ -1,3 +1,10 @@
+// Vercel injects these automatically at build time: VERCEL_PROJECT_PRODUCTION_URL
+// is the stable production domain (custom domain if one is later attached,
+// otherwise the *.vercel.app URL), VERCEL_URL is the current deployment's own
+// URL (used for preview deployments). Neither requires any manual setup in
+// the Vercel dashboard. Falls back to localhost for local dev.
+const deployedUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+
 export const profile = {
   name: "Hicham AGRAD",
   initials: "HA",
@@ -7,7 +14,7 @@ export const profile = {
   github: "https://github.com/hichamagrad",
   linkedin: "https://www.linkedin.com/in/hicham-agrad",
   photoUrl: "/images/hero-portrait.jpg" as string | null,
-  siteUrl: "https://hicham-agrad.dev",
+  siteUrl: deployedUrl ? `https://${deployedUrl}` : "http://localhost:3000",
 };
 
 // No Arabic CV yet, so Arabic-locale visitors get the English version
