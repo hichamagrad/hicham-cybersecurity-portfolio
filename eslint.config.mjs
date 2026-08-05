@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Reference-only Claude Design handoff prototype, not part of the app.
+    "project/**",
   ]),
 ]);
 

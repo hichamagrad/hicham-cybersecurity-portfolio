@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Plain (non-inline) theme: utilities like bg-bg / text-text compile to
+   background-color: var(--color-bg), so the light-theme override block
+   below can flip them at runtime via the data-theme attribute. `@theme
+   inline` would instead bake the literal value into the utility at build
+   time, which defeats runtime theme switching entirely. */
+@theme {
+  --color-bg: #0b0d10;
+  --color-surface: #181c22;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-text: #ffffff;
+  --color-text-muted: #b0b7c3;
+  --color-accent: #3b82f6;
+  --color-accent-2: #06b6d4;
+  --color-chip: rgba(255, 255, 255, 0.05);
+  --color-hover: rgba(255, 255, 255, 0.05);
+  /* Fixed dark text for content sitting directly on the vivid accent fill
+     (gradient badges, tag chips) — stays dark in both themes for contrast. */
+  --color-on-accent: #0b0d10;
 }
 
+/* Fonts reference next/font CSS variables set on <html>; inlining resolves
+   that reference at build time (no runtime switching needed for these). */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), var(--font-arabic), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --grid-line: rgba(255, 255, 255, 0.6);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --color-bg: #f6f8fb;
+  --color-surface: #ffffff;
+  --color-border: rgba(15, 23, 42, 0.09);
+  --color-border-subtle: rgba(15, 23, 42, 0.07);
+  --color-border-strong: rgba(15, 23, 42, 0.14);
+  --color-text: #0b0d10;
+  --color-text-muted: #56606e;
+  --color-accent: #2563eb;
+  --color-accent-2: #0e7490;
+  --color-chip: rgba(15, 23, 42, 0.045);
+  --color-hover: rgba(15, 23, 42, 0.045);
+  --grid-line: rgba(15, 23, 42, 0.5);
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+}
+
+/* RTL: mirror the JetBrains Mono tag/eyebrow tracking so it still reads as
+   deliberate letter-spacing rather than a leftover LTR artifact. */
+[dir="rtl"] .font-mono-wide {
+  letter-spacing: 0;
+}
+
+/* Scroll-reveal: elements start hidden and slide up once observed entering
+   the viewport (see components/Reveal.tsx). Defined here so content stays
+   visible-by-default if JS never runs (no-JS / crawler fallback). */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+[data-reveal="in"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
