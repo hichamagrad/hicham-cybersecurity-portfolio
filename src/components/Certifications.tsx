@@ -18,26 +18,35 @@ export default function Certifications() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5">
         {certifications.map((cert, i) => {
           const year = new Date(cert.date).getFullYear();
-          return (
-            <Reveal key={cert.id} delay={(i % 4) * 70}>
-              <a
-                href={cert.verifyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block rounded-2xl border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:border-accent/40"
-              >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-[10px] bg-gradient-to-br from-accent to-accent-2 font-mono text-[11px] font-bold text-on-accent">
-                  {cert.initials}
-                </div>
-                <div className="mb-1 font-semibold leading-snug text-text">{cert.name}</div>
-                <div className="mb-2.5 text-[13px] text-text-muted">{cert.issuer}</div>
-                <div className="font-mono text-[11px] font-medium tracking-wide text-accent-2">
-                  {t("earnedLabel")} {year}
-                </div>
+          const cardClass =
+            "group block rounded-2xl border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:border-accent/40";
+          const content = (
+            <>
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-[10px] bg-gradient-to-br from-accent to-accent-2 font-mono text-[11px] font-bold text-on-accent">
+                {cert.initials}
+              </div>
+              <div className="mb-1 font-semibold leading-snug text-text">{cert.name}</div>
+              <div className="mb-2.5 text-[13px] text-text-muted">{cert.issuer}</div>
+              <div className="font-mono text-[11px] font-medium tracking-wide text-accent-2">
+                {t("earnedLabel")} {year}
+              </div>
+              {cert.verifyUrl && (
                 <div className="mt-2 inline-flex items-center gap-1 text-[12px] font-medium text-text-muted opacity-0 transition-opacity group-hover:opacity-100">
                   {t("verifyLabel")} <ArrowRightIcon className="h-3 w-3 rtl:rotate-180" />
                 </div>
-              </a>
+              )}
+            </>
+          );
+
+          return (
+            <Reveal key={cert.id} delay={(i % 4) * 70}>
+              {cert.verifyUrl ? (
+                <a href={cert.verifyUrl} target="_blank" rel="noopener noreferrer" className={cardClass}>
+                  {content}
+                </a>
+              ) : (
+                <div className={cardClass}>{content}</div>
+              )}
             </Reveal>
           );
         })}

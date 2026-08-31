@@ -4,11 +4,20 @@ export type Certification = {
   issuer: string;
   initials: string;
   date: string; // ISO, for the "EARNED <year>" status + <time> element
-  verifyUrl: string;
+  verifyUrl?: string;
 };
 
-// All verifiable Coursera course certificates: real, not placeholder credentials.
+// All verifiable, real credentials: Coursera course certificates plus one
+// Oracle University certification (no public verify link on file for that
+// one — the card just isn't clickable rather than linking to a guessed URL).
 export const certifications: Certification[] = [
+  {
+    id: "ociFoundations",
+    name: "Oracle Cloud Infrastructure Certified Foundations Associate",
+    issuer: "Oracle University",
+    initials: "OCI",
+    date: "2026-08-31",
+  },
   {
     id: "rhel124",
     name: "Administration Linux avec Red Hat RH124",
