@@ -8,8 +8,7 @@ export type Certification = {
 };
 
 // All verifiable, real credentials: Coursera course certificates plus one
-// Oracle University certification (no public verify link on file for that
-// one — the card just isn't clickable rather than linking to a guessed URL).
+// Oracle University certification (Oracle CertView badge link).
 export const certifications: Certification[] = [
   {
     id: "ociFoundations",
@@ -17,6 +16,8 @@ export const certifications: Certification[] = [
     issuer: "Oracle University",
     initials: "OCI",
     date: "2026-08-31",
+    verifyUrl:
+      "https://catalog-education.oracle.com/pls/certview/sharebadge?id=A43BCA7F7EDFBC1F0BF34A98A68C5BB2A15FB5E253B6863CB9E0EDE9D3B1FA60",
   },
   {
     id: "rhel124",
