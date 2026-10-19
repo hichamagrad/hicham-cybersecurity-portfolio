@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Hicham AGRAD | Étudiant Ingénieur en Cybersécurité",
-    "description": "Portfolio de Hicham AGRAD, étudiant ingénieur en cybersécurité à Rabat, Maroc, spécialisé en sécurité offensive, développement logiciel sécurisé et sécurité des systèmes IA."
+    "description": "Portfolio de Hicham AGRAD, étudiant ingénieur en cybersécurité à Rabat, Maroc, spécialisé en supervision et défense (SOC), développement logiciel sécurisé et sécurité des systèmes IA."
   },
   "nav": {
     "home": "Accueil",
@@ -20,7 +20,7 @@
   "hero": {
     "badge": "OUVERT AUX OPPORTUNITÉS",
     "title": "Étudiant Ingénieur en Cybersécurité",
-    "bio": "J'étudie la manière dont les systèmes se compromettent pour mieux construire ceux qui résistent. Mes domaines de prédilection sont la sécurité offensive, le développement logiciel sécurisé, et les enjeux de sécurité émergents des plateformes intégrant l'IA. J'applique aujourd'hui cette approche en tant que stagiaire cybersécurité chez YAZAKI Morocco, sur la prévention des risques d'une plateforme IA interne.",
+    "bio": "Je m'intéresse à la défense active : supervision, détection d'incidents et réponse, soit l'activité d'un SOC (Security Operations Center). Je construis des systèmes de supervision sécurité, centralisation des logs, détection en temps réel, alerting, que j'audite et durcis moi-même, et j'étudie les enjeux de sécurité propres aux plateformes intégrant l'IA. En dernière année d'ingénieur en informatique et réseaux à l'EMSI (2024 – 2027), à la recherche d'un stage PFE à partir de janvier 2027.",
     "ctaContact": "Me Contacter",
     "ctaProjects": "Voir les Projets",
     "portraitAlt": "Portrait de Hicham AGRAD"
@@ -28,11 +28,11 @@
   "about": {
     "eyebrow": "À PROPOS",
     "heading": "L'ingénierie de la sécurité, à partir des fondamentaux.",
-    "paragraph1": "Je suis étudiant ingénieur spécialisé en cybersécurité, concentré sur la sécurité offensive, le développement logiciel sécurisé et, plus récemment, les enjeux de sécurité propres aux systèmes intégrant l'IA. J'aime comprendre comment les choses se cassent, assez bien pour construire celles qui ne se cassent pas.",
-    "paragraph2": "Cet intérêt se retrouve dans mes projets : une stack de supervision sécurité que j'ai moi-même auditée et durcie, une plateforme d'audit de LLM, et un réseau virtualisé pensé autour d'une vraie segmentation. J'applique aujourd'hui la même démarche en tant que stagiaire cybersécurité chez YAZAKI Morocco.",
+    "paragraph1": "Je suis étudiant ingénieur spécialisé en cybersécurité, orienté vers la supervision et la défense (SOC) : surveillance des logs, détection d'incidents et réponse. Je m'intéresse aussi au développement logiciel sécurisé et, plus récemment, aux enjeux de sécurité propres aux systèmes intégrant l'IA. J'aime comprendre comment les choses se cassent, assez bien pour construire celles qui ne se cassent pas.",
+    "paragraph2": "Cet intérêt se retrouve dans mes projets : SecureWatch, une stack de supervision sécurité avec centralisation des logs, détection d'incidents en temps réel et alerting, que j'ai moi-même auditée et durcie, une plateforme d'audit de LLM, et un réseau virtualisé auto-supervisé pensé autour d'une vraie segmentation. J'ai appliqué la même démarche lors de mon stage cybersécurité chez YAZAKI Morocco.",
     "educationLabel": "FORMATION",
     "education": [
-      { "degree": "Cycle Ingénieur en Informatique et Réseaux", "place": "EMSI (École Marocaine des Sciences de l'Ingénieur)", "period": "2025 – 2026" },
+      { "degree": "Cycle Ingénieur en Informatique et Réseaux (dernière année)", "place": "EMSI (École Marocaine des Sciences de l'Ingénieur)", "period": "2024 – 2027" },
       { "degree": "Développement Digital Full Stack", "place": "ISTA NTIC, Hay Riad", "period": "2022 – 2024" }
     ],
     "missionLabel": "MISSION",

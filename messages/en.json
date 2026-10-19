@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Hicham AGRAD | Cybersecurity Engineering Student",
-    "description": "Portfolio of Hicham AGRAD, a cybersecurity engineering student in Rabat, Morocco, focused on offensive security, secure software development, and AI system security."
+    "description": "Portfolio of Hicham AGRAD, a cybersecurity engineering student in Rabat, Morocco, focused on security monitoring and defense (SOC), secure software development, and AI system security."
   },
   "nav": {
     "home": "Home",
@@ -20,7 +20,7 @@
   "hero": {
     "badge": "OPEN TO OPPORTUNITIES",
     "title": "Cybersecurity Engineering Student",
-    "bio": "I study how systems break so I can help build ones that don't. My focus areas are offensive security, secure software development, and the emerging security challenges of AI-integrated platforms. I'm currently applying that focus as a cybersecurity intern at YAZAKI Morocco, working on risk prevention for an internal AI platform.",
+    "bio": "I'm drawn to active defense: monitoring, incident detection, and response, the work of a SOC (Security Operations Center). I build security monitoring systems, log centralization, real-time detection, alerting, that I audit and harden myself, and I study the security challenges specific to AI-integrated platforms. Final-year engineering student in computer science and networks at EMSI (2024 – 2027), seeking a final-year (PFE) internship starting January 2027.",
     "ctaContact": "Get in Touch",
     "ctaProjects": "View Projects",
     "portraitAlt": "Portrait of Hicham AGRAD"
@@ -28,11 +28,11 @@
   "about": {
     "eyebrow": "ABOUT",
     "heading": "Security engineering, from first principles.",
-    "paragraph1": "I'm an engineering student specializing in cybersecurity, focused on offensive security, secure software development, and, more recently, the security challenges specific to AI-integrated systems. I like understanding how things break well enough to help build ones that don't.",
-    "paragraph2": "That interest shows up in my projects: a security monitoring stack I self-audited and hardened, an LLM auditing platform, and a virtualized network built around proper segmentation. I'm currently putting the same mindset to work as a cybersecurity intern at YAZAKI Morocco.",
+    "paragraph1": "I'm an engineering student specializing in cybersecurity, oriented toward monitoring and defense (SOC): log surveillance, incident detection, and response. I'm also interested in secure software development and, more recently, the security challenges specific to AI-integrated systems. I like understanding how things break well enough to help build ones that don't.",
+    "paragraph2": "That interest shows up in my projects: SecureWatch, a security monitoring stack with log centralization, real-time incident detection, and alerting, which I self-audited and hardened, an LLM auditing platform, and a self-monitoring virtualized network built around proper segmentation. I put the same mindset to work during my cybersecurity internship at YAZAKI Morocco.",
     "educationLabel": "EDUCATION",
     "education": [
-      { "degree": "Cycle Ingénieur en Informatique et Réseaux", "place": "EMSI (École Marocaine des Sciences de l'Ingénieur)", "period": "2025 – 2026" },
+      { "degree": "Cycle Ingénieur en Informatique et Réseaux (Final Year)", "place": "EMSI (École Marocaine des Sciences de l'Ingénieur)", "period": "2024 – 2027" },
       { "degree": "Développement Digital Full Stack", "place": "ISTA NTIC, Hay Riad", "period": "2022 – 2024" }
     ],
     "missionLabel": "MISSION",
