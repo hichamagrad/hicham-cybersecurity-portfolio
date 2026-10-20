@@ -23,7 +23,16 @@
     "bio": "I'm drawn to active defense: monitoring, incident detection, and response, the work of a SOC (Security Operations Center). I build security monitoring systems, log centralization, real-time detection, alerting, that I audit and harden myself, and I study the security challenges specific to AI-integrated platforms. Final-year engineering student in computer science and networks at EMSI (2024 – 2027), seeking a final-year (PFE) internship starting January 2027.",
     "ctaContact": "Get in Touch",
     "ctaProjects": "View Projects",
-    "portraitAlt": "Portrait of Hicham AGRAD"
+    "portraitAlt": "Portrait of Hicham AGRAD",
+    "tagline": "Think. Analyze. Secure.",
+    "areasLabel": "Focus areas",
+    "areas": {
+      "soc": "SOC & Monitoring",
+      "offensive": "Offensive Security",
+      "network": "Network Security",
+      "secureDev": "Secure Development",
+      "ai": "AI Security"
+    }
   },
   "about": {
     "eyebrow": "ABOUT",

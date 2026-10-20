@@ -23,7 +23,16 @@
     "bio": "Je m'intéresse à la défense active : supervision, détection d'incidents et réponse, soit l'activité d'un SOC (Security Operations Center). Je construis des systèmes de supervision sécurité, centralisation des logs, détection en temps réel, alerting, que j'audite et durcis moi-même, et j'étudie les enjeux de sécurité propres aux plateformes intégrant l'IA. En dernière année d'ingénieur en informatique et réseaux à l'EMSI (2024 – 2027), à la recherche d'un stage PFE à partir de janvier 2027.",
     "ctaContact": "Me Contacter",
     "ctaProjects": "Voir les Projets",
-    "portraitAlt": "Portrait de Hicham AGRAD"
+    "portraitAlt": "Portrait de Hicham AGRAD",
+    "tagline": "Réfléchir. Analyser. Sécuriser.",
+    "areasLabel": "Domaines",
+    "areas": {
+      "soc": "SOC & Supervision",
+      "offensive": "Sécurité Offensive",
+      "network": "Sécurité Réseau",
+      "secureDev": "Développement Sécurisé",
+      "ai": "Sécurité IA"
+    }
   },
   "about": {
     "eyebrow": "À PROPOS",

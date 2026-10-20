@@ -4,9 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { profile } from "@/data/profile";
-import { ArrowRightIcon } from "./icons";
+import { ArrowRightIcon, ChipIcon, CodeIcon, MonitorIcon, NetworkIcon, TargetIcon } from "./icons";
 
 type Particle = { x: number; y: number; vx: number; vy: number };
+
+const focusAreas = [
+  { id: "soc", Icon: MonitorIcon },
+  { id: "offensive", Icon: TargetIcon },
+  { id: "network", Icon: NetworkIcon },
+  { id: "secureDev", Icon: CodeIcon },
+  { id: "ai", Icon: ChipIcon },
+] as const;
+
+// "HICHAM" in 8-bit ASCII, two bytes per row
+const binarySignature = ["01001000 01001001", "01000011 01001000", "01000001 01001101"];
+
+const [firstName, ...restName] = profile.name.split(" ");
+const lastName = restName.join(" ");
 
 function useParticleField(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
   useEffect(() => {
@@ -121,7 +135,7 @@ export default function Hero() {
           </div>
 
           <h1 className="mb-5 text-[40px] font-extrabold leading-[1.05] tracking-tight text-text sm:text-6xl lg:text-[72px]">
-            {profile.name}
+            {firstName} <span className="text-accent">{lastName}</span>
           </h1>
           <p className="mb-5 text-lg font-semibold leading-snug text-accent sm:text-xl lg:text-2xl">
             {t("title")}
@@ -145,6 +159,25 @@ export default function Hero() {
               {t("ctaProjects")}
             </a>
           </div>
+
+          <ul
+            aria-label={t("areasLabel")}
+            className="mt-12 grid max-w-2xl grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-5 sm:gap-0"
+          >
+            {focusAreas.map(({ id, Icon }, i) => (
+              <li
+                key={id}
+                className={`flex flex-col gap-2.5 sm:px-4 sm:first:ps-0 ${
+                  i > 0 ? "sm:border-s sm:border-border-strong" : ""
+                }`}
+              >
+                <Icon className="h-6 w-6 text-accent-2" />
+                <span className="text-[13px] font-medium leading-snug text-text-muted">
+                  {t(`areas.${id}`)}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="w-[min(280px,70vw)] flex-none">
@@ -182,6 +215,21 @@ export default function Hero() {
               </div>
             </div>
           )}
+
+          <div className="mt-5 flex items-start justify-between gap-4">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-text-muted">
+              {t("tagline")}
+            </p>
+            <div
+              dir="ltr"
+              aria-hidden="true"
+              className="shrink-0 whitespace-nowrap border-e-2 border-accent pe-2.5 text-end font-mono text-[10px] leading-[1.6] text-text-muted/70"
+            >
+              {binarySignature.map((row) => (
+                <div key={row}>{row}</div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
