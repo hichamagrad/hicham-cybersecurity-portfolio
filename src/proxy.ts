@@ -4,5 +4,7 @@ import { routing } from "./i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)"],
+  // `icon` is the generated favicon route (app/icon.tsx); it has no file
+  // extension, so without this exclusion it gets locale-redirected and 404s.
+  matcher: ["/((?!api|trpc|_next|_vercel|icon|.*\\..*).*)"],
 };

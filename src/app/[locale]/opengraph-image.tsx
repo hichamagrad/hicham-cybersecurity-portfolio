@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { profile } from "@/data/profile";
+import { StaticMonogram } from "@/components/Monogram";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -29,19 +30,8 @@ export default async function Image() {
             display: "flex",
           }}
         />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            fontSize: 26,
-            fontWeight: 700,
-            color: "#ffffff",
-            letterSpacing: -0.5,
-            marginBottom: 32,
-          }}
-        >
-          HA<span style={{ color: "#3B82F6" }}>.</span>sec
+        <div style={{ display: "flex", marginBottom: 36 }}>
+          <StaticMonogram width={96} color="#ffffff" />
         </div>
         <div
           style={{
@@ -75,7 +65,7 @@ export default async function Image() {
             maxWidth: 780,
           }}
         >
-          Offensive security · Secure software development · AI system security
+          SOC &amp; security monitoring · Offensive security · AI system security
         </div>
       </div>
     ),

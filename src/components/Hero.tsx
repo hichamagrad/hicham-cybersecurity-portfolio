@@ -19,8 +19,85 @@ const focusAreas = [
 // "HICHAM" in 8-bit ASCII, two bytes per row
 const binarySignature = ["01001000 01001001", "01000011 01001000", "01000001 01001101"];
 
+// The source photo is cropped tight at the shoulders, so fade the bottom and
+// both sides to avoid hard straight edges against the hero background.
+const portraitFade =
+  "linear-gradient(to bottom, #000 62%, transparent 96%), linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)";
+const portraitMask: React.CSSProperties = {
+  maskImage: portraitFade,
+  WebkitMaskImage: portraitFade,
+  maskComposite: "intersect",
+  WebkitMaskComposite: "source-in",
+};
+
 const [firstName, ...restName] = profile.name.split(" ");
 const lastName = restName.join(" ");
+
+const delay = (s: number) => ({ "--d": `${s}s` }) as React.CSSProperties;
+
+function randomBits(s: string) {
+  return s.replace(/[01]/g, () => (Math.random() < 0.5 ? "0" : "1"));
+}
+
+/** Rows start as noise and resolve left to right into the real bytes, then
+ *  one byte occasionally glitches and settles back. */
+function useBinaryDecode(rows: string[]) {
+  const [out, setOut] = useState(rows);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let frame = 0;
+    const decode = setInterval(() => {
+      frame++;
+      setOut(
+        rows.map((row, r) => {
+          const revealed = frame - 8 - r * 4;
+          return row
+            .split("")
+            .map((c, i) => (c === " " || i < revealed ? c : Math.random() < 0.5 ? "0" : "1"))
+            .join("");
+        })
+      );
+      if (frame - 8 - (rows.length - 1) * 4 > rows[0].length) {
+        clearInterval(decode);
+        setOut(rows);
+        glitch();
+      }
+    }, 45);
+
+    function glitch() {
+      timers.push(
+        setTimeout(() => {
+          const r = Math.floor(Math.random() * rows.length);
+          const b = Math.random() < 0.5 ? 0 : 9;
+          let ticks = 0;
+          const flicker = setInterval(() => {
+            ticks++;
+            setOut(
+              rows.map((row, i) =>
+                i === r && ticks < 7 ? row.slice(0, b) + randomBits(row.slice(b, b + 8)) + row.slice(b + 8) : row
+              )
+            );
+            if (ticks >= 7) {
+              clearInterval(flicker);
+              glitch();
+            }
+          }, 60);
+          timers.push(flicker);
+        }, 3500 + Math.random() * 2500)
+      );
+    }
+
+    return () => {
+      clearInterval(decode);
+      timers.forEach((id) => clearTimeout(id));
+    };
+  }, [rows]);
+
+  return out;
+}
 
 function useParticleField(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
   useEffect(() => {
@@ -97,6 +174,8 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const [mouse, setMouse] = useState({ x: 50, y: 30 });
+  const binary = useBinaryDecode(binarySignature);
+  const taglineLines = t("tagline").split(/(?<=\.)\s+/);
 
   useParticleField(canvasRef);
 
@@ -127,24 +206,36 @@ export default function Hero() {
 
       <div className="relative z-[2] mx-auto flex w-full max-w-6xl flex-wrap-reverse items-center gap-14">
         <div className="min-w-[320px] flex-1">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/8 px-3 py-1.5">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent-2" />
+          <div
+            style={delay(0.05)}
+            className="hero-up mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/8 px-3 py-1.5"
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inset-0 animate-ping rounded-full bg-accent-2 opacity-75" />
+              <span className="relative h-1.5 w-1.5 rounded-full bg-accent-2" />
+            </span>
             <span className="font-mono-wide font-mono text-[11px] font-medium tracking-wide text-text-muted">
               {t("badge")}
             </span>
           </div>
 
-          <h1 className="mb-5 text-[40px] font-extrabold leading-[1.05] tracking-tight text-text sm:text-6xl lg:text-[72px]">
-            {firstName} <span className="text-accent">{lastName}</span>
+          <h1
+            style={delay(0.15)}
+            className="hero-up mb-5 text-[40px] font-extrabold leading-[1.05] tracking-tight text-text sm:text-6xl lg:text-[72px]"
+          >
+            {firstName} <span className="text-shimmer">{lastName}</span>
           </h1>
-          <p className="mb-5 text-lg font-semibold leading-snug text-accent sm:text-xl lg:text-2xl">
+          <p
+            style={delay(0.3)}
+            className="hero-up mb-5 text-lg font-semibold leading-snug text-accent sm:text-xl lg:text-2xl"
+          >
             {t("title")}
           </p>
-          <p className="mb-9 max-w-xl text-[15px] leading-relaxed text-text-muted sm:text-lg">
+          <p style={delay(0.42)} className="hero-up mb-9 max-w-xl text-[15px] leading-relaxed text-text-muted sm:text-lg">
             {t("bio")}
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div style={delay(0.55)} className="hero-up flex flex-wrap gap-4">
             <a
               href="#contact"
               className="inline-flex items-center gap-2 rounded-[10px] bg-gradient-to-br from-accent to-accent-2 px-7 py-3.5 text-[15px] font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(59,130,246,0.35)]"
@@ -167,12 +258,18 @@ export default function Hero() {
             {focusAreas.map(({ id, Icon }, i) => (
               <li
                 key={id}
-                className={`flex flex-col gap-2.5 sm:px-4 sm:first:ps-0 ${
+                style={delay(0.7 + i * 0.09)}
+                className={`hero-up group flex flex-col gap-2.5 sm:px-4 sm:first:ps-0 ${
                   i > 0 ? "sm:border-s sm:border-border-strong" : ""
                 }`}
               >
-                <Icon className="h-6 w-6 text-accent-2" />
-                <span className="text-[13px] font-medium leading-snug text-text-muted">
+                <span
+                  style={delay(0.85 + i * 0.09)}
+                  className="icon-draw inline-flex w-fit transition-transform duration-300 group-hover:-translate-y-1 group-hover:drop-shadow-[0_0_6px_rgba(34,211,238,0.7)]"
+                >
+                  <Icon className="h-6 w-6 text-accent-2" />
+                </span>
+                <span className="text-[13px] font-medium leading-snug text-text-muted transition-colors duration-300 group-hover:text-text">
                   {t(`areas.${id}`)}
                 </span>
               </li>
@@ -180,18 +277,37 @@ export default function Hero() {
           </ul>
         </div>
 
-        <div className="w-[min(280px,70vw)] flex-none">
+        <div className="w-[min(260px,66vw)] flex-none sm:w-[320px] lg:w-[360px]">
           {profile.photoUrl ? (
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[20px] border border-border bg-surface">
-              <Image
-                src={profile.photoUrl}
-                alt={t("portraitAlt")}
-                fill
-                priority
-                sizes="(min-width: 640px) 280px, 70vw"
-                className="object-cover"
-                style={{ objectPosition: "50% 22%" }}
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="hero-glow pointer-events-none absolute -inset-x-[18%] top-[4%] bottom-[12%] rounded-full bg-[radial-gradient(circle_at_50%_38%,rgba(59,130,246,0.38),rgba(6,182,212,0.12)_45%,transparent_70%)] blur-2xl"
               />
+              <div
+                aria-hidden="true"
+                className="ring-orbit pointer-events-none absolute left-1/2 top-[2%] aspect-square w-[108%] -translate-x-1/2 rounded-full border border-accent/25"
+              >
+                <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-2 shadow-[0_0_10px_3px_rgba(34,211,238,0.55)]" />
+              </div>
+              <div
+                aria-hidden="true"
+                className="ring-orbit-rev pointer-events-none absolute left-1/2 top-[10%] aspect-square w-[88%] -translate-x-1/2 rounded-full border border-dashed border-accent-2/25"
+              >
+                <span className="absolute bottom-[14.6%] right-[14.6%] h-1.5 w-1.5 translate-x-1/2 translate-y-1/2 rounded-full bg-accent shadow-[0_0_8px_2px_rgba(59,130,246,0.6)]" />
+              </div>
+              <div className="hero-portrait relative z-[1]">
+                <Image
+                  src={profile.photoUrl}
+                  alt={t("portraitAlt")}
+                  width={720}
+                  height={1102}
+                  priority
+                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 320px, 66vw"
+                  className="h-auto w-full"
+                  style={portraitMask}
+                />
+              </div>
             </div>
           ) : (
             <div
@@ -216,18 +332,28 @@ export default function Hero() {
             </div>
           )}
 
-          <div className="mt-5 flex items-start justify-between gap-4">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-text-muted">
-              {t("tagline")}
-            </p>
-            <div
-              dir="ltr"
-              aria-hidden="true"
-              className="shrink-0 whitespace-nowrap border-e-2 border-accent pe-2.5 text-end font-mono text-[10px] leading-[1.6] text-text-muted/70"
-            >
-              {binarySignature.map((row) => (
-                <div key={row}>{row}</div>
+          {/* Tagline and binary share font size and line height so their three rows line up. */}
+          <div className="relative z-[2] -mt-6 flex items-stretch justify-between gap-4 font-mono text-[10.5px] leading-[1.8]">
+            <p className="font-medium uppercase tracking-[0.2em] text-text-muted">
+              <span className="sr-only">{t("tagline")}</span>
+              {taglineLines.map((line, i) => (
+                <span
+                  key={line}
+                  aria-hidden="true"
+                  style={{ "--n": line.length, "--d": `${1.1 + i * 0.5}s` } as React.CSSProperties}
+                  className={`type-line ${i === taglineLines.length - 1 ? "type-caret" : ""}`}
+                >
+                  {line}
+                </span>
               ))}
+            </p>
+            <div dir="ltr" aria-hidden="true" className="flex shrink-0 gap-2.5 rtl:flex-row-reverse">
+              <div style={delay(1.0)} className="hero-fade whitespace-nowrap text-end text-text-muted/70 tabular-nums rtl:text-start">
+                {binary.map((row, i) => (
+                  <div key={i}>{row}</div>
+                ))}
+              </div>
+              <span style={delay(1.0)} className="bin-bar w-0.5 rounded-full bg-accent" />
             </div>
           </div>
         </div>

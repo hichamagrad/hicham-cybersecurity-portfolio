@@ -13,7 +13,7 @@ export const profile = {
   phone: "+212 608 244 562",
   github: "https://github.com/hichamagrad",
   linkedin: "https://www.linkedin.com/in/hicham-agrad",
-  photoUrl: "/images/hero-portrait.jpg" as string | null,
+  photoUrl: "/images/hero-portrait.webp" as string | null,
   siteUrl: deployedUrl ? `https://${deployedUrl}` : "http://localhost:3000",
 };
 

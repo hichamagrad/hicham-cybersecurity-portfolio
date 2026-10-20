@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { StaticMonogram } from "@/components/Monogram";
 
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
@@ -17,17 +18,7 @@ export default function Icon() {
           borderRadius: 14,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            fontSize: 26,
-            fontWeight: 800,
-            color: "#ffffff",
-            letterSpacing: -1,
-          }}
-        >
-          HA<span style={{ color: "#3B82F6" }}>.</span>
-        </div>
+        <StaticMonogram width={52} color="#ffffff" />
       </div>
     ),
     { ...size }
